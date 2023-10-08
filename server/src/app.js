@@ -1,16 +1,21 @@
 const express = require("express");
-const cors = require("cors");
-const api = require("./routes/api");
 const path = require("path");
+const cors = require("cors");
 const morgan = require("morgan");
+
+const api = require("./routes/api");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:3000" }));
-app.use(morgan("combined"));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(morgan("combined"));
+app.use(express.json()); // Allow your express APP to accept json.
+app.use(express.static(path.join(__dirname, "..", "public"))); // Serving react app bundled from build.
 
 app.use("/v1", api);
 
